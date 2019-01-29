@@ -9,7 +9,9 @@ const fs = require('fs');
 const path = require('path');
 let basename = path.basename(__filename);
 
-let sequelize = new Sequelize(process.env.DATABASE_URL);
+let sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'postgres'
+});
 // let host = 'localhost'
 // let sequelize
 // if(process.env.NODE_ENV==='production'){
