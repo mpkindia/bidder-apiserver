@@ -29,7 +29,6 @@ app.use(authMiddleware);
 const server = new ApolloServer({
     schema,
     playground: true,
-    introspection: true,
     context: ({req}) => ({
         user: req.user
     })

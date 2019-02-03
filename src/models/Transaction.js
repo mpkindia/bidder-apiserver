@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) =>{
        defaultValue: DataTypes.UUIDV4 ,       
        primaryKey: true },
     trans_type: { type: DataTypes.STRING(245) , allowNull:false }, //debit or credit
-    value: { type: DataTypes.STRING, defaultValue: 0 }, //if debit subtract it
+    value: { type: DataTypes.INTEGER, defaultValue: 0 }, //if debit subtract it
     expense_type: { type: DataTypes.STRING(245) , allowNull:false } // bid or admin 
     //if bid then bid_id and nul
 },{
@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) =>{
 
   Transaction.associate = (models) => {
      Transaction.Bids = Transaction.belongsTo(models.Bid, { foreignKey: 'bid_id'})
+     Transaction.Users = Transaction.belongsTo(models.User, { foreignKey: 'user_id'})
   }
 
   return Transaction

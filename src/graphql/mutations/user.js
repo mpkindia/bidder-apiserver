@@ -1,7 +1,7 @@
 const graphql = require('graphql')
 const { GraphQLString, GraphQLNonNull, GraphQLID, GraphQLFloat, GraphQLBoolean } = graphql
 const UserService = require('../../services/db/user')
-const { User, Admin } = require('../../models')
+const { User, Admin, Transaction } = require('../../models')
 const { UserAccount } = require('../types')
 const { to, TE } = require('../../../common/helper')
 module.exports = {
@@ -73,7 +73,28 @@ module.exports = {
             let err, user
             [ err, user ] = await to(User.findByPk(id))
             if(err) TE('User not found')
+            let prevCredits = user.credits
             await user.update({ credits })
+            if(prevCredits > credits ){
+                console.log(prevCredits)
+                await Transaction.create({ 
+                    trans_type: "debit",
+                    value: credits,
+                    expense_type: "admin",
+                    user_id: user.id,
+                    // bid_id: "null"
+                })
+            }
+            else {
+                console.log(prevCredits)
+                await Transaction.create({ 
+                    trans_type: "credit",
+                    value: credits,
+                    expense_type: "admin",
+                    user_id: user.id,
+                    // bid_id: "null"
+                })
+            }
             return user
         }
     },

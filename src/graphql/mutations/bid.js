@@ -1,7 +1,7 @@
 const graphql = require('graphql')
 const { GraphQLString, GraphQLNonNull, GraphQLID } = graphql
 const { to,TE } = require('../../../common/helper')
-const { Bid, User, Bazaar } = require('../../models')
+const { Bid, User, Bazaar, Transaction } = require('../../models')
 const { BidType } = require('../types')
 module.exports = {
     addBid: {
@@ -28,6 +28,13 @@ module.exports = {
             await user.update({ credits: leftcredits })
             let err, bid
             [err, bid] = await to(Bid.create({user_id,...args}))
+
+            console.log(bid.id)
+            if(bid) {
+                await Transaction.create({ 
+                    trans_type: 'debit', value: args.bid_value, expense_type: 'bid', bid_id: bid.id, user_id
+                })
+            }
             if (err) return TE('bid not created')
             else return bid
         }
