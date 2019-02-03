@@ -11,8 +11,8 @@ let basename = path.basename(__filename);
 let host = 'localhost'
 let sequelize
 if(process.env.NODE_ENV==='production'){
-  sequelize = new Sequelize(config.p_db, config.p_username, config.p_password, {
-    host:'35.240.180.187',
+  sequelize = new Sequelize(
+    process.env.DATABASE_URL, {
     dialect: 'postgres'
   });  
 }
