@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) =>{
        type: DataTypes.UUID,
        defaultValue: DataTypes.UUIDV4 ,       
        primaryKey: true },
+    // serial: { type:DataTypes.INTEGER, defaultValue:0 },
     name: { type: DataTypes.STRING(245) , allowNull:false }, 
     open_time: { type: DataTypes.STRING, allowNull: false },
     close_time: { type: DataTypes.STRING, allowNull: false },

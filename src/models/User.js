@@ -2,7 +2,7 @@
  * Schema for User Account .
  */
 
-const bcrypt = require('bcrypt') 
+const bcrypt = require('bcrypt-nodejs') 
 const { to, TE } = require('../../common/helper')
 const jwt = require('jsonwebtoken')
 const config = require('../../config')
@@ -33,29 +33,24 @@ module.exports = (sequelize, DataTypes) =>{
     let err
     if(user.username.split('@').length<2) TE('email not provided')
     let salt, hash
-    [err, salt] = await to(bcrypt.genSalt(10))
-    if(err) TE(err.message)
+    salt = bcrypt.genSaltSync(10)
     let errr
-    [errr, hash] = await to(bcrypt.hash(user.password, salt))
-    if(err) TE(err.message)
+    hash = bcrypt.hashSync(user.password, salt)
     user.password = hash
   }) 
 
 // Sequelize Instance methods (have access to user model via this object)
   User.prototype.checkPassword = async function (pwd) {
     let err, pass 
-    [err, pass] = await to(bcrypt.compare(pwd, this.password))
-    if (err) TE(err)
+     pass = bcrypt.compareSync(pwd, this.password)
     console.log('pass:',pass)
     if(!pass) return pass
     return this 
     }
   User.prototype.newPassword = async function (new_pwd) {
       let err, salt, hash; 
-      [ err, salt ] = await to(bcrypt.genSalt(10))
-      if(err) TE(err.message)
-      [ err, hash] = await to(bcrypt.hash(new_pwd,salt))
-      if(err) TE(err.message)
+      salt = bcrypt.genSaltSync(10)
+      hash = bcrypt.hashSync(new_pwd,salt)
       console.log(hash)
       return hash
   }

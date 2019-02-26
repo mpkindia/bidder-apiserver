@@ -1,5 +1,5 @@
 const graphql = require('graphql')
-const { GraphQLString, GraphQLNonNull, GraphQLID } = graphql
+const { GraphQLString, GraphQLNonNull, GraphQLID, GraphQLFloat } = graphql
 const { to,TE } = require('../../../common/helper')
 const { Bazaar } = require('../../models')
 const { BazaarType } = require('../types')
@@ -48,6 +48,19 @@ module.exports = {
             else return bazaar
         }
     },
+    // serialBazaar: {
+    //     type: BazaarType,
+    //     args: {
+    //         id: { type: GraphQLID },
+    //         serial: { type: GraphQLFloat }
+    //     },
+    //     resolve: async function ( _, { id, serial }) {
+    //         let err, bazaar
+    //         [ err , bazaar] = await to(Bazaar.findByPk(id))
+    //         await bazaar.update({ serial })
+    //         return bazaar
+    //     }
+    // },
     editBazaar: {
         type: BazaarType,
         args: {

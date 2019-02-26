@@ -32,7 +32,8 @@ const BazaarType = new GraphQLObjectType({
         close_time          : { type: GraphQLString },
         result              : { type: GraphQLString },
         open_active         : { type: GraphQLBoolean },
-        close_active        : { type: GraphQLBoolean }
+        close_active        : { type: GraphQLBoolean },
+        // serial              : { type: GraphQLFloat },
     })
 })
 
