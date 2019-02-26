@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "v8.9.4"
+  },
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js"
@@ -11,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "apollo-server-express": "^2.1.0",
-    "bcrypt": "^3.0.0",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
